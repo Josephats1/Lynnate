@@ -2,148 +2,207 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Letter to Josephine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Josephine</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
     }
 
-    body {
-      font-family: 'Great Vibes', cursive;
-      color: #fff;
-      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
-      background-size: 600% 600%;
-      animation: gradient 15s ease infinite;
-      padding: 30px 20px;
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 8s linear infinite;
+      opacity: 0.7;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(45deg);
+      }
+      100% {
+        transform: translateY(-10vh) rotate(45deg);
+      }
+    }
+
+    .container {
+      background: #fff;
+      padding: 2rem 3rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
-      font-size: 2.2em;
-      text-align: center;
-      margin-bottom: 20px;
-      color: #ff007f;
-      text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f;
-      animation: fadeIn 2s ease-out;
-    }
-
-    .letter {
-      font-size: 2em;
-      line-height: 1.8em;
-      max-width: 700px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
-      backdrop-filter: blur(6px);
-      animation: fadeInUp 2s ease-out;
-    }
-
-    .signature {
-      text-align: right;
-      margin-top: 30px;
-      font-size: 1.3em;
-      color: #00ffd5;
-      text-shadow: 0 0 8px #00ffd5;
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      0% {
-        transform: translateY(30px);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .glow-heart {
-      display: flex;
-      justify-content: center;
-      margin-top: 30px;
-    }
-
-    .glow-heart button {
-      background: none;
-      border: none;
       font-size: 2.5rem;
-      cursor: pointer;
-      color: #ff007f;
-      text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f;
-      animation: pulse 1.5s infinite;
+      color: #ff4081;
+      margin-bottom: 1rem;
     }
 
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        text-shadow: 0 0 10px #ff007f;
-      }
-      50% {
-        transform: scale(1.1);
-        text-shadow: 0 0 20px #ff66a1, 0 0 30px #ff99bb;
-      }
-      100% {
-        transform: scale(1);
-        text-shadow: 0 0 10px #ff007f;
-      }
+    .typing {
+      font-size: 1.1rem;
+      color: #444;
+      min-height: 100px;
+      white-space: pre-line;
     }
 
     @media (max-width: 600px) {
       h1 {
-        font-size: 1.8em;
+        font-size: 2rem;
       }
-      .letter {
-        font-size: 1em;
-        padding: 20px;
+      .typing {
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 <body>
+  <canvas id="fireworks"></canvas>
 
-  <h1 style="font-family: algerian;">My Dearest Josephine ❤️</h1>
+  <div class="hearts"></div>
 
-  <div class="letter">
-    <p>From the moment you walked into my life, everything changed. The air felt warmer, time slowed down when you smiled, and suddenly the world didn’t seem so heavy anymore...</p>
-
-    <p>I didn’t just fall in love with you—I <em>crashed</em> into you, and I’ve never wanted to get back up. Every piece of me has found peace in your presence...</p>
-
-    <p>Josephine, you are my heart’s rhythm and my soul’s melody. In a world full of noise, you are the one voice that brings me silence and comfort...</p>
-
-    <p>There are so many things I adore about you... the way you speak with passion about the things you care about, the way you hold me when I’m falling apart...</p>
-
-    <p>I want to love you for the rest of my days. I want to be your support, your protector, your peace, your adventure, and your biggest fan.</p>
-
-    <p>When I say I love you, Josephine, I don’t mean it lightly. I mean I love your past, your scars, your fears, your hopes, and your future. I love you through joy and sorrow, in laughter and in tears...</p>
-
-    <p>And no matter where life takes us, know that you will always have all of me.</p>
-     <p style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Happy Easter - My Dear Josephine ❤️ My Love, My Affair, My midnight Burtterfly</p>
-    <div class="signature">
-      Forever yours,<br>
-      Jerry 💙
-    </div>
+  <div class="container">
+    <h1>Happy Birthday Josephine 🎂</h1>
+    <div class="typing" id="typewriter"></div>
   </div>
 
-  <div class="glow-heart">
-    <button onclick="alert('Love You Forever 💖')">💖</button>
-  </div>
+  <script>
+    // Typing effect
+    const message = `To my wife, my babygirl, my forever queen ❤️\n\nOn this special day, I pause all the code in the world to say:\n\nHappy Birthday to the most beautiful soul I know.\n\nIf love were a program, you'd be my infinite loop — constant, unbreakable, always running.\n\nYou’re the perfect syntax in my script, and the most elegant logic in my life.\n\nForever compiling love for you,\nYour engineer for life. 💻❤️`;
+    let i = 0;
+    const speed = 50;
 
+    function typeWriter() {
+      if (i < message.length) {
+        document.getElementById("typewriter").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+    typeWriter();
+
+    // Hearts animation
+    const heartsContainer = document.querySelector('.hearts');
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
+    }
+    setInterval(createHeart, 400);
+
+    // Fireworks animation on canvas
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createFirework() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height / 2;
+      const color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+
+      for (let i = 0; i < 100; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          angle: Math.random() * 2 * Math.PI,
+          speed: Math.random() * 5 + 2,
+          radius: Math.random() * 2 + 1,
+          color: color,
+          life: 100
+        });
+      }
+    }
+
+    function drawFireworks() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, index) => {
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.life--;
+        p.speed *= 0.98;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
+        if (p.life <= 0) {
+          particles.splice(index, 1);
+        }
+      });
+
+      requestAnimationFrame(drawFireworks);
+    }
+
+    setInterval(createFirework, 1000);
+    drawFireworks();
+  </script>
 </body>
 </html>
